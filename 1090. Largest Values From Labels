@@ -1,0 +1,33 @@
+class Solution {
+public:
+
+    static bool cmp(pair<int,int> &a, pair<int,int> &b){
+        return a.first > b.first;
+    }
+    int largestValsFromLabels(vector<int>& values, vector<int>& labels, int numWanted, int useLimit) {
+        vector<pair<int,int>> temp;
+        for(int i=0 ; i<values.size() ; i++){
+            temp.push_back(make_pair(values[i], labels[i]));
+        }
+        sort(temp.begin() , temp.end(), cmp);
+        map<int, int> mp;
+        for(auto x: labels)
+            mp[x] = 0;
+        vector<int> v;
+        for(int i= 0 ; i<values.size(); i++){
+            if(mp[temp[i].second] != useLimit){
+                v.push_back(temp[i].first);
+                mp[temp[i].second]++;
+            }
+        }
+        int sum = 0;
+        if(v.size() < numWanted)
+            for(auto x:v)
+                sum+=x;
+        else{
+            for(int i=0 ; i<numWanted ; i++)
+                sum+=v[i];
+        }
+        return sum;
+    }
+};
