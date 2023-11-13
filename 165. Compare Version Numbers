@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<int> splitString(string str){
+        istringstream ss(str);
+        vector<int> splitValues;
+        string t;
+        while(getline(ss, t, '.')){
+            splitValues.push_back(stoi(t));
+        }
+        return splitValues;
+    }
+    int compareVersion(string version1, string version2) {
+        vector<int> v1 = splitString(version1);
+        vector<int> v2 = splitString(version2);
+        int v1_size = v1.size() , v2_size = v2.size();
+        int x = max(v1_size, v2_size);
+        if(v1_size < v2_size){
+            int t = v2_size-v1_size;
+            while(t--)
+                v1.push_back(0);
+        }
+        else if(v2_size < v1_size){
+            int t = v1_size - v2_size;
+            while(t--)
+                v2.push_back(0);
+        }
+        int ans = 0;
+        for(int i=0; i<x ; i++){
+            if(v1[i] == v2[i])
+                ans = 0;
+            else if(v1[i] < v2[i])
+                return -1;
+            else 
+                return 1;
+        }
+        return ans; 
+    }
+};
