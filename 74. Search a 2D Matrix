@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool binarySearch(vector<int> v , int target){
+        int beg=0 , end=v.size()-1;
+        while(beg<=end){
+            int mid = beg+(end-beg)/2;
+            if(v[mid] == target)
+                return true;
+            else if(v[mid] < target)
+                beg=mid+1;
+            else
+                end=mid-1;
+        }
+        return false;
+    }
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        for(int i=0 ; i<matrix.size() ; i++){
+            if(binarySearch(matrix[i] , target))
+                return true;
+        }
+        return false;
+    }
+};
