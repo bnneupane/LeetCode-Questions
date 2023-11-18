@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int findBestIndex(int i, int k, const vector<int>& nums, const vector<long>& prefix) {
+        int target = nums[i];
+        int left = 0, right = i, best = i;
+        
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            long count = i - mid + 1;
+            long finalSum = count * target;
+            long originalSum = prefix[i] - prefix[mid] + nums[mid];
+            long operationsRequired = finalSum - originalSum;
+            
+            if (operationsRequired > k) {
+                left = mid + 1;
+            } else {
+                best = mid;
+                right = mid - 1;
+            }
+        }
+        
+        return i - best + 1;
+    }
+    
+    int maxFrequency(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end());
+        
+        vector<long> prefixSums;
+        prefixSums.push_back(nums[0]);
+        
+        for (int i = 1; i < nums.size(); i++) {
+            prefixSums.push_back(nums[i] + prefixSums.back());
+        }
+        
+        int maxOperations = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            maxOperations = max(maxOperations, findBestIndex(i, k, nums, prefixSums));
+        }
+        
+        return maxOperations;
+    }
+};
