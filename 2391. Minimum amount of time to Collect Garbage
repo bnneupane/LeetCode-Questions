@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int garbageCollection(vector<string>& garbage, vector<int>& travel) {
+        int t_time = 0;
+        t_time += count(garbage[0].begin(), garbage[0].end(), 'G');
+        t_time += count(garbage[0].begin(), garbage[0].end(), 'M');
+        t_time += count(garbage[0].begin(), garbage[0].end(), 'P');
+
+        //co -> count variable to track travel time in between the previous and current waste type.
+        //and it will be added in t_time if we get the required waste type in next iteration.
+        for(int i=1, co=0 ; i<garbage.size() ; i++){
+                if(count(garbage[i].begin(), garbage[i].end(), 'G') == 0)
+                        co += travel[i-1];
+                else{
+                    t_time += count(garbage[i].begin(), garbage[i].end(), 'G') + travel[i-1] + co;
+                    co=0;
+                }
+        }
+        for(int i=1 , co=0; i<garbage.size() ; i++){
+                if(count(garbage[i].begin(), garbage[i].end(), 'M') == 0)
+                        co += travel[i-1];
+                else{
+                    t_time += count(garbage[i].begin(), garbage[i].end(), 'M') + travel[i-1] + co;
+                    co=0;
+                }
+        }
+        for(int i=1, co=0 ; i<garbage.size() ; i++){
+                if(count(garbage[i].begin(), garbage[i].end(), 'P') == 0)
+                        co += travel[i-1];
+                else{
+                    t_time += count(garbage[i].begin(), garbage[i].end(), 'P') + travel[i-1] + co;
+                    co=0;
+                }
+        }
+        return t_time;
+    }
+};
