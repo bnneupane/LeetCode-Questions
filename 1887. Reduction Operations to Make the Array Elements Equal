@@ -8,7 +8,7 @@ public:
             if (nums[i] == prevUnique) 
                 continue;
             if (nums[i] < prevUnique) {
-                no_oprs += i; //Adding cumulative index no.
+                no_opr += i; //Adding cumulative index no.
             }
             prevUnique = nums[i];
         }
