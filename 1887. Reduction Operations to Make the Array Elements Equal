@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int reductionOperations(vector<int>& nums) {
+        sort(nums.begin(), nums.end(), greater<int>());
+        int no_opr = 0;
+        int prevUnique = nums[0];
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] == prevUnique) 
+                continue;
+            if (nums[i] < prevUnique) {
+                no_oprs += i; //Adding cumulative index no.
+            }
+            prevUnique = nums[i];
+        }
+        return no_opr;        
+    }
+};
