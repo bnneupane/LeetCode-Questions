@@ -1,0 +1,56 @@
+// class Solution {
+// public:
+//     vector<vector<int>> onesMinusZeros(vector<vector<int>>& grid) {
+//         int row = grid.size();
+//         int col = grid[0].size();
+//         vector<vector<int>> diff(row, vector<int>(col, 0));
+
+//         for(int i=0 ; i<row ; i++){
+//             for(int j = 0 ; j < col ; j++){
+//                 int co_0_row =0, co_1_row = 0, co_0_col = 0, co_1_col = 0;
+//                 for(int k=0 ; k<row ; k++){
+//                     if(grid[k][j] == 0)
+//                         co_0_row++;
+//                     else
+//                         co_1_row++;
+//                 }
+
+//                 for(int k = 0 ; k<col ; k++){
+//                     if(grid[i][k] == 0)
+//                         co_0_col++;
+//                     else
+//                         co_1_col++;
+//                 }
+//                 diff[i][j] = co_1_row + co_1_col - co_0_row - co_0_col;
+//             }
+//         }
+//         return diff;
+//     }
+        
+// };
+
+class Solution {
+public:
+    vector<vector<int>> onesMinusZeros(vector<vector<int>>& grid) {
+        int row = grid.size();
+        int col = grid[0].size();
+
+        vector<int> rowOnes(row, 0);
+        vector<int> colOnes(col, 0);
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                rowOnes[i] += grid[i][j];
+                colOnes[j] += grid[i][j];
+            }
+        }
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                grid[i][j] = 2 * (rowOnes[i] + colOnes[j]) - row - col;
+            }
+        }
+
+        return grid;
+    }
+};
