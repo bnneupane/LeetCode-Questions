@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> findMatrix(vector<int>& nums) {
+        map<int,int> mp;
+        for(int x:nums)
+            mp[x]++;
+
+        vector<vector<int>> ans;
+        map<int,int> :: iterator it;
+        vector<int> temp;
+
+        while(!mp.empty()){
+            for (it = mp.begin(); it != mp.end();) {
+                temp.push_back(it->first);
+                (it->second)--;
+                if (it->second == 0) {
+                    it = mp.erase(it);
+                } else {
+                    it++;
+                }
+            }
+            ans.push_back(temp);
+            temp.clear();
+        }
+
+        return ans;
+    }
+};
