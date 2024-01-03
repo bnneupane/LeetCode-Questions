@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int numberOfBeams(vector<string>& bank) {
+        int ans = 0;
+        vector<int> count1(bank.size(), 0);
+
+        for(int i=0 ; i < bank.size() ; i++){
+            count1[i] = count(bank[i].begin(), bank[i].end(), '1');
+        }
+
+        for(int i=0 ; i < bank.size() ; i++){
+            if(count1[i] == 0)
+                continue;
+            for(int j=i+1 ; j < bank.size() ; j++){
+                if(count1[j] == 0)
+                    continue;
+                ans += count1[i] * count1[j];
+                break;
+            }
+        }
+
+        return ans;
+    }
+};
