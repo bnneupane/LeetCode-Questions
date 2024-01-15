@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        set<int> st1;
+        for(auto x : matches){
+            st1.insert(x[0]);
+        }
+
+        map<int,int> mp1;
+        for(auto x : matches){
+            mp1[x[1]]++;
+            st1.erase(x[1]);
+        }
+        vector<int> v1, v2;
+    
+        for(auto x : st1)
+            v1.push_back(x);
+
+        for(auto it = mp1.begin() ; it != mp1.end() ; it++)
+            if(it -> second == 1)
+                v2.push_back(it -> first);
+
+        return {v1,v2};
+    }
+};
