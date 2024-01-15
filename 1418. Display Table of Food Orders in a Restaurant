@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<vector<string>> displayTable(vector<vector<string>>& orders) {
+        set<string> v;
+        for(auto x : orders){
+            v.insert(x[2]);
+        }
+        
+        vector<string> v1;
+        v1.push_back("Table");
+        for(auto x : v)
+            v1.push_back(x);
+        
+        set<int> s;
+        for(auto x : orders)
+            s.insert(stoi(x[1]));
+        
+        vector<vector<string>> ans;
+        ans.push_back(v1);
+
+        map<pair<string,string>, int> mp;
+        for(auto x : orders){
+            mp[make_pair(x[1], x[2])]++;
+        }
+
+        while(!s.empty()){
+            vector<string> t(v1.size(), "0");
+            string k = to_string(*(s.begin()));
+            t[0] = k;
+            for(auto it = mp.begin() ; it != mp.end() ; it++){
+                if(it -> first . first == k && it -> second != 0){
+                    auto xt = find(v1.begin() + 1, v1.end(), it -> first . second);
+                    t[distance(v1.begin(), xt)] = to_string(it -> second);
+                }
+            }
+            ans.push_back(t);
+            t.clear();
+            s.erase(stoi(k));
+
+        }
+        return ans;
+    }
+};
