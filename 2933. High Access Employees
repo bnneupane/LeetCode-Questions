@@ -1,0 +1,39 @@
+class Solution {
+public:
+
+    vector<string> findHighAccessEmployees(vector<vector<string>>& access_times) {
+        set<string> st;
+        for(auto x : access_times){
+            st.insert(x[0]);
+        }
+        
+        vector<string> ans;
+
+        while(!st.empty()){
+            vector<string> v;
+            for(auto x : access_times){
+                if(x[0] == *st.begin())
+                    v.push_back(x[1]);
+            }
+
+            if(v.size() >= 3){
+                sort(v.begin(), v.end());
+                for(int i = 0 ; i < v.size() - 2 ; i++){
+                    int count = 0;
+                    int c = (stoi(v[i+2].substr(0,2)) ) * 60 + stoi(v[i+2].substr(2,2));
+                    int b = (stoi(v[i+1].substr(0,2)) ) * 60 + stoi(v[i+1].substr(2,2));
+                    int a = (stoi(v[i].substr(0,2))) * 60 + stoi(v[i].substr(2,2));
+                    count += (c - b) + (b - a);
+                    if(count < 60){
+                        ans.push_back(*st.begin());
+                        break;
+                    }
+                }
+            }
+            st.erase(*st.begin());
+            
+        }
+        return ans;
+
+    }
+};
