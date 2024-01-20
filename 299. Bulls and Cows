@@ -1,0 +1,26 @@
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int no_bulls = 0, no_cows = 0;
+
+        for(int i = 0 ; i < secret.length() ; i++){
+            if(secret[i] == guess[i]){
+                no_bulls++;
+                secret.erase(i, 1);
+                guess.erase(i, 1);
+                i--;
+            }
+        }
+
+        for(int i = 0 ; i < guess.length() ; i++){
+            int k = secret.find(guess[i]);
+            if(k != string :: npos){
+                no_cows++;
+                secret.erase(k, 1);
+            }
+        }
+
+        return to_string(no_bulls) + 'A' + to_string(no_cows) + 'B';
+
+    }
+};
