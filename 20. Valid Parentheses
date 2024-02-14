@@ -1,0 +1,32 @@
+class Solution {
+public:
+    bool isValid(string s) {
+        map<char,char> mp;
+        
+        mp['('] = ')';
+        mp['{'] = '}';
+        mp['['] = ']';
+
+        if(mp.find(s[0]) == mp.end())
+            return false;
+
+        stack<char> st;
+
+        for(auto x : s){
+            if(mp.find(x) != mp.end()){
+                st.push(x);
+                continue;
+            }
+
+            if(!st.empty() && x == mp[st.top()])
+                st.pop(); 
+            
+            else
+                st.push(x);
+        }
+        if(st.empty())
+            return true;
+        
+        return false;
+    }
+};
