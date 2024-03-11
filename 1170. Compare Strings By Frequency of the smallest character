@@ -1,0 +1,62 @@
+// class Solution {
+// public:
+
+//     int f(string s) {
+//         map<char, int> mp;
+
+//         for (auto x : s) {
+//             mp[x]++;
+//         }
+
+//         return mp.begin() -> second;
+//     }
+
+//     vector<int> numSmallerByFrequency(vector<string>& queries, vector<string>& words) {
+//         vector<int> ans;
+
+//         for (auto x : queries) {
+//             int count = 0;
+//             for (auto y : words) {
+//                 if (f(x) < f(y)) {
+//                     count++;
+//                 }
+//             }
+
+//             ans.push_back(count);
+//         }
+
+//         return ans;
+//     }
+// };
+
+class Solution {
+public:
+    int f(string s) {
+        map<char, int> mp;
+
+        for (auto x : s) {
+            mp[x]++;
+        }
+
+        return mp.begin() -> second;
+    }
+
+    vector<int> numSmallerByFrequency(vector<string>& queries, vector<string>& words) {
+        vector<int> ans;
+
+        vector<int> wordFrequencies;
+        for (auto x : words) {
+            wordFrequencies.push_back(f(x));
+        }
+
+        sort(wordFrequencies.begin(), wordFrequencies.end());
+
+        for (auto query : queries) {
+            int queryFreq = f(query);
+            auto it = upper_bound(wordFrequencies.begin(), wordFrequencies.end(), queryFreq);
+            ans.push_back(wordFrequencies.end() - it);
+        }
+
+        return ans;
+    }
+};
